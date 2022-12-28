@@ -10,7 +10,7 @@ function loader(element) {
   element.textContent = '';
 
   loadInterval = setInterval(() => {
-    element.textContent += '';
+    element.textContent += '.';
 
     if (element.textContent === '....') {
       element.textContent = '';
@@ -23,7 +23,7 @@ function typeText(element, text) {
 
   let interval = setInterval(() => {
     if (index < text.length) {
-      element.innerHTML = text.charAt(index)
+      element.innerHTML += text.charAt(index)
       index++
     } else {
       clearInterval(interval)
@@ -45,7 +45,10 @@ function chatStripe(isAi, value, uniqueId) {
       <div class="wrapper ${isAi && 'ai'}">
         <div class="chat">
           <div class="profile">
-            <img src="${isAi ? bot: user}" alt="${isAi ? 'bot': 'user'}" />
+            <img 
+              src=${isAi ? bot: user} 
+              alt="${isAi ? 'bot': 'user'}" 
+            />
           </div>
           <div class="message" id=${uniqueId}>${value}</div>
         </div>
@@ -75,7 +78,7 @@ const handleSubmit = async (e) => {
 
   // fetch data from server
 
-  const response = await fetch('http://localhost:5000', {
+  const response = await fetch('https://codex-im0y.onrender.com/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -86,7 +89,7 @@ const handleSubmit = async (e) => {
   })
 
   clearInterval(loadInterval);
-  messageDiv.innerHTML = ''
+  messageDiv.innerHTML = " "
 
   if(response.ok) {
     const data = await response.json()
@@ -97,7 +100,6 @@ const handleSubmit = async (e) => {
     const err = await response.text()
 
     messageDiv.innerHTML = "Something went wrong"
-
     alert(err)
   }
 
